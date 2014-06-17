@@ -1,9 +1,24 @@
 <?php
 
+/**
+ * Xerox
+ *
+ * 
+ * Class Component
+ * 
+ */
+
 namespace Xerox;
 
-class Component
-{
+class Component {
+
+    /**
+     * Component Constructor
+     *
+     * @return Void
+     */
     public function __construct() {
+        
     }
+
 }
