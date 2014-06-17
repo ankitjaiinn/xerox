@@ -4,9 +4,7 @@
  * Xerox
  *
  * 
- * Class CreateIssue
- * This is the action class will be loaded when a action is called from 
- * the command line
+ * This is the starting file which will instantiate the process
  * 
  */
 
