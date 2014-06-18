@@ -87,28 +87,44 @@ class CreateIssue extends \Xerox\Action {
      */
     private function parseArguments($params) {
 	
-		if (isset($params[1]) && isset($params[2]) && $params[1] == '-u') {
-			$this->username = $params[2];
-		} else {
-			throw new Exception('Username is undefined!');
+		if (isset($params[1]) && isset($params[2])) {
+			if( $params[1] == '-u' ) {
+				$this->username = $params[2];
+			} else if( $params[1] == '-p' ) {
+				$this->password = $params[2];
+			} else {
+				throw new \Exception('Unknown option!');
+			}
 		}
 
-		if (isset($params[3]) && isset($params[4]) && $params[3] == '-p') {
-			$this->password = $params[4];
-		} else {
-			throw new Exception('Password is undefined!');
+		if (isset($params[3]) && isset($params[4])) {
+			if( $params[3] == '-u' ) {
+				$this->username = $params[4];
+			} else if( $params[3] == '-p' ) {
+				$this->password = $params[4];
+			} else {
+				throw new \Exception('Unknown option!');
+			}
+		}
+		
+		if( empty($this->username) ) {
+			throw new \Exception('Username is undefined!');
+		}
+		
+		if( empty($this->password) ) {
+			throw new \Exception('Password is undefined!');
 		}
 
 		if (isset($params[5])) {
 			$this->repository = $params[5];
 		} else {
-			throw new Exception('Repository URL is undefined!');
+			throw new \Exception('Repository URL is undefined!');
 		}
 
 		if (isset($params[6])) {
 			$this->issue_title = $params[6];
 		} else {
-			throw new Exception('Issue Title is undefined!');
+			throw new \Exception('Issue Title is undefined!');
 		}
 
 		if (isset($params[7])) {
