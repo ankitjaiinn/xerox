@@ -49,20 +49,31 @@ abstract class Component {
     }
 	
 	/**
-     * GitHub setRepository
+     * setRepository
      *
      * @return Self Instance
      */
     public function setRepository($repository) {
         $url_components = parse_url($repository);
-        $path = explode('/', $url_components['path']);
-        $this->owner = $path[1];
-        $this->repo = $path[2];
+        
+        if( !empty($url_components['path']) && $url_components['path'] !== '/' ) {
+            $path = explode('/', $url_components['path']);
+            $this->owner = $path[1];
+            
+            if( isset( $path[2] ) ) {
+                $this->repo =  $path[2];
+            } else {
+                throw new Exception("Repository name not found");
+            }
+        } else {
+            throw new Exception("Owner and Repository name not found");
+        }
+        
         return $this;
     }
 	
 	/**
-     * Bitbucket setUsername
+     * setUsername
      *
      * @return Self Instance
      */
@@ -72,7 +83,7 @@ abstract class Component {
     }
 
     /**
-     * Bitbucket setPassword
+     * setPassword
      *
      * @return Self Instance
      */
@@ -84,5 +95,7 @@ abstract class Component {
 	abstract public function setAuth($curl_handler);
 	
 	abstract public function createIssue($title, $description);
+    
+    abstract public function parseResponse($response);
 
 }

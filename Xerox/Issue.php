@@ -156,15 +156,18 @@ class Issue {
 				->setUsername($this->username)
 				->setPassword($this->password);
 
+        $data = null;
+        
         switch ($this->method) {
             case 'create-issue':
                 $data = $this->Component->createIssue($this->issue_title, $this->issue_description);
-				print_r($data);
                 break;
 
             default:
                 throw new Exception('Method does not exist\'s');
         }
+        
+        return $data;
     }
 	
 	/**
@@ -208,15 +211,14 @@ class Issue {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		
 		$response = array(
-            'response' => curl_exec($ch),
+            'response' => json_decode(curl_exec($ch)),
             'error' => curl_error($ch)
         );
         curl_close($ch);
-
-        return $response;
-
-		// return $this->parseResponse($url, $response, $returnType, $expectedHttpCode, $isArray);
+        
+        return $this->Component->parseResponse($response);
 
 	}
+    
     
 }

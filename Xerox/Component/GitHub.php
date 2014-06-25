@@ -48,5 +48,25 @@ class Github extends Component {
         return $this->client->request($url, 'POST', $data);
 		
     }
+    
+    public function parseResponse($response)
+    {
+        ob_start();
+        echo "==========================================================================\n";
+        if( isset($response['response']->message) ) {
+            echo 'API Message: ' . $response['response']->message . "\n";
+        } else if ( isset($response['response']->id) ) {
+            echo "ID: \t\t\t" . $response['response']->id . "\n";
+            echo "Issue URL: \t\t" . $response['response']->url . "\n";
+            echo "Issue Title: \t\t" . $response['response']->title . "\n";
+            echo "Issue Created at: \t" . $response['response']->created_at . "\n";
+        } else {
+            throw new Exception("Entered data is not correct");
+        }
+        echo "==========================================================================\n";
+        $data = ob_get_contents();
+        ob_get_clean();
+        return $data;
+    }
 
 }

@@ -22,8 +22,10 @@ try {
     array_shift($argv);
 	
     $issue = new Issue($argv);
-    $issue->execute();
+    echo $issue->execute();
 	
 } catch (Exception $e) {
-    echo $e->getMessage();
+    echo "==========================================================================\n";
+    echo "Error : " . $e->getMessage() . "\n";
+    echo "==========================================================================\n";
 }

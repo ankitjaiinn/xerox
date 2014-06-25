@@ -44,6 +44,24 @@ class Bitbucket extends Component {
 		$data = http_build_query($data);
         $url = sprintf('%s/%s/%s/issues', $this->api_url, $this->owner, $this->repo);
         return $this->client->request($url, 'POST', $data);
-		
     }
+    
+    public function parseResponse($response)
+    {
+        ob_start();
+        echo "==========================================================================\n";
+        if( isset($response['response']->resource_uri) ) {
+            echo "Issue URL: \t\t" . $response['response']->resource_uri . "\n";
+            echo "Issue Title: \t\t" . $response['response']->title . "\n";
+            echo "Issue Created at: \t" . $response['response']->utc_created_on . "\n";
+        } else {
+            throw new Exception("Entered data is not correct");
+        }
+        echo "==========================================================================\n";
+        $data = ob_get_contents();
+        ob_get_clean();
+        return $data;
+    }
+    
+    
 }
